@@ -1,0 +1,57 @@
+<!-- http://indefinitestudies.org/2008/08/26/ant-skeleton-buildxml/ -->
+<!--
+Here is a quick Ant skeleton build file, based on the Ant manual.
+
+    --Install and configure Ant (you must set a few environment variables)
+    --Save the following file as 'build.xml' in your base directory (noted as ．.・).
+    --Replace PROJECTNAME with what you want and MAINCLASSNAME with the class that must be launched in your resulting jar (the class with a static void main(String[]) method).
+    --Put your source files in ./src, and any external libraries (jar files) in ./lib. Ant will then compile the classes in ./build/classes and store them as a jar file in ./build/jar.
+    --Run Ant in the base directory with the command ．ant・ or ．ant main・, it will execute the directives in build.xml (it will clean, compile, package and run your program).
+
+-->
+<project name="PROJECTNAME" basedir="." default="main">
+
+  <!-- set global properties for this build -->
+  <property name="main-class"  value="MAINCLASSNAME"/>
+  <property name="src.dir"     value="src"/>
+  <property name="build.dir"   value="build"/>
+  <property name="classes.dir" value="${build.dir}/classes"/>
+  <property name="jar.dir"     value="${build.dir}/jar"/>
+  <property name="lib.dir"     value="lib"/>
+
+  <!-- adds every jar in the lib directory to the classpath-->
+  <path id="classpath">
+  <fileset dir="${lib.dir}" includes="**/*.jar"/>
+  </path>
+
+  <target name="clean">
+    <delete dir="${build.dir}"/>
+  </target>
+
+  <target name="compile">
+    <mkdir dir="${classes.dir}"/>
+    <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+  </target>
+
+  <target name="jar" depends="compile">
+    <mkdir dir="${jar.dir}"/>
+    <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+      <manifest>
+        <attribute name="Main-Class" value="${main-class}"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="run" depends="jar">
+    <java fork="true" classname="${main-class}">
+      <classpath>
+        <path refid="classpath"/>
+        <path location="${jar.dir}/${ant.project.name}.jar"/>
+      </classpath>
+    </java>
+  </target>
+
+  <target name="clean-build" depends="clean,jar"/>
+
+  <target name="main" depends="clean,run"/>
+</project>
