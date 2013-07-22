@@ -7,15 +7,8 @@ import java.text.SimpleDateFormat;
 
 
 public class Findtr {
-	// http://www.javaprogrammingforums.com/java-programming-tutorials/3-java-program-can-list-all-files-given-directory.html
 	public static void main(String[] args) {
-		
-		// http://stackoverflow.com/questions/41894/0-program-name-in-java-discover-main-class
-		StackTraceElement[] stack = Thread.currentThread ().getStackTrace ();
-	    StackTraceElement main = stack[stack.length - 1];
-	    String mainClass = main.getClassName ();
-	    
-	    //String mainClass = System.getProperty("sun.java.command");
+	    String mainClass = System.getProperty("sun.java.command");
 
 		// Directory path here
 		if(args.length != 3){
