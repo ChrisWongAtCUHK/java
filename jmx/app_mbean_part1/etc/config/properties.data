@@ -1,0 +1,7 @@
+#Wed Oct 06 18:07:40 PDT 2009
+CacheSize=1000
+PersistCache=false
+SessionTimeout=3600
+DataEngineFactory=dummy.app.EngineFactory
+
+

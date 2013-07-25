@@ -3,12 +3,12 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">  
       
-    <bean class="com.springdemo.postProcessor.MyBeanPostProcessor"></bean>  
+    <bean class="com.springdemo.postProcessor.MyBeanPostProcessor"></bean>
     <!--我们先把BeanFactoryPostProcessor注释掉，不启用,然后查看测试输出结果        -->  
     <bean class="com.springdemo.postProcessor.MyBeanFactoryPostProcessor"></bean>  
 
     <bean id="postProcessorBean" class="com.springdemo.postProcessor.PostProcessorBean" >  
         <property name="username" value="test"></property>  
-        <property name="password" value="test"></property>  
+     	<property name="password" value="test"></property>
     </bean>  
 </beans>  

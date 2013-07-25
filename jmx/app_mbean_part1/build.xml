@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+
+<project name="sample-mbean" default="ear">
+
+    <target name="properties">
+        <property name="app.name" value="sample-mbean-app"/>
+        <property name="web.name" value="app"/>
+        <property name="mbeans.name" value="${app.name}-mbeans"/>
+        <property name="src.dir" location="src"/>
+        <property name="build.dir" location="build"/>
+        <property name="classes.build.dir" location="build/classes"/>
+        <property name="etc.dir" location="etc"/>
+        <property environment="env"/>
+        <property name="lib.dir" location="${env.WL_HOME}/lib"/>
+    </target>
+
+    <target name="setup" depends="properties">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${classes.build.dir}"/>
+    </target>
+
+    <target name="compile" depends="setup">
+        <javac srcdir="${src.dir}" destdir="${classes.build.dir}"
+            classpath="${lib.dir}/weblogic.jar" />
+    </target>
+
+    <target name="mbeans-jar" depends="compile">
+        <jar destfile="${build.dir}/${mbeans.name}.jar" 
+             basedir="${classes.build.dir}">
+            <manifest>
+                <attribute name="Class-Path" value="../.."/>
+            </manifest> 
+        </jar>
+    </target>
+
+    <target name="war" depends="setup">
+        <war destfile="${build.dir}/${web.name}.war" webxml="${etc.dir}/web.xml">
+        </war>
+    </target>
+
+    <target name="ear" depends="mbeans-jar, war">
+        <ear destfile="${build.dir}/${app.name}.ear" appxml="${etc.dir}/application.xml" update="true">
+            <fileset dir="${build.dir}" includes="${web.name}.war"/>
+            <zipfileset dir="${build.dir}/" includes="${mbeans.name}.jar" prefix="APP-INF/lib"/>
+            <zipfileset dir="${etc.dir}/config" prefix="config"
+               includes="properties.data" />
+            <zipfileset dir="${etc.dir}" includes="weblogic-application.xml" prefix="META-INF"/>
+        </ear>
+    </target>
+
+    <target name="clean" depends="properties">
+        <delete dir="${build.dir}"/>
+    </target>
+
+</project>
+
+
+
+

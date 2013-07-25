@@ -11,7 +11,6 @@ public class MyBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
 	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory)
 			throws BeansException {
-		// TODO Auto-generated method stub
 		// Modify postProcessorBean username property
 		BeanDefinition bd = beanFactory.getBeanDefinition("postProcessorBean");  
         MutablePropertyValues pv =  bd.getPropertyValues();  
