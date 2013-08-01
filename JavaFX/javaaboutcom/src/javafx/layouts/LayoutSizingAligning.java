@@ -1,6 +1,5 @@
 package javafx.layouts;
 
-import java.util.Iterator;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -50,10 +49,12 @@ public class LayoutSizingAligning extends Application {
         Tab tabSize = new Tab();
         tabSize.setText("Sizing");
         tabSize.setContent(sizingSample());
+        tabSize.setClosable(false);
         
         Tab tabAlign = new Tab();
         tabAlign.setText("Alignment");
         tabAlign.setContent(alignmentSample());
+        tabAlign.setClosable(false);
         
         tabs.getTabs().addAll(tabSize, tabAlign);
         
@@ -83,8 +84,7 @@ public class LayoutSizingAligning extends Application {
         border.setLeft(lvList);    
         border.setRight(createButtonColumn());  
         border.setBottom(createButtonRow());  // Uses a tile pane for sizing
-//        border.setBottom(createButtonBox());  // Uses an HBox, no sizing 
-
+        
         return border;
     }
        
@@ -187,18 +187,5 @@ public class LayoutSizingAligning extends Application {
         tileButtons.getChildren().addAll(btnApply, btnContinue, btnExit);
         
         return tileButtons;
-    }
- 
-/*
- * Creates a row of buttons with the default sizes.
- */
-    private HBox createButtonBox() { 
-        
-        HBox hbButtons = new HBox();
-        hbButtons.setSpacing(10);
-        hbButtons.setPadding(new Insets(20, 10, 20, 0)); 
-        hbButtons.getChildren().addAll(btnApply, btnContinue, btnExit);
-        
-        return hbButtons;
     }
 }
