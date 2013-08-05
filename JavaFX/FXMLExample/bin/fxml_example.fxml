@@ -9,9 +9,16 @@
 <?import javafx.scene.text.*?>
 
 
-<GridPane fx:controller="fxmlexample.FXMLExampleController" 
+<GridPane
     xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10"
     styleClass="root">
+    
+    <fx:script>
+             function handleSubmitButtonAction() {
+                 actiontarget.setText("Calling the JavaScript");
+             }
+     </fx:script>
+         
     <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
     
     <!-- debug -->
@@ -36,7 +43,7 @@
     <HBox spacing="10" alignment="bottom_right" 
         GridPane.columnIndex="1" GridPane.rowIndex="4">
         <Button text="Sign In"     
-        onAction="#handleSubmitButtonAction"/>
+        onAction="handleSubmitButtonAction(event);"/>
     </HBox>
 
     <Text fx:id="actiontarget"
