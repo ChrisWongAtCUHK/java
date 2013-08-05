@@ -11,7 +11,9 @@ import javafx.scene.text.FontWeight;
 import javafx.geometry.HPos;
 
 public class GridPaneExample extends Application {
+    private final String[] gridStrings  = {"Rank", "Player", "Goals", "1", "Alan Shearer", };
     
+	
     @Override
     public void start(Stage primaryStage) {
         //Create a GridPane for the Text Controls
@@ -116,6 +118,14 @@ public class GridPaneExample extends Application {
         primaryStage.show();
     }
 
+    // Function to add node to grid
+    public void gridAdd(GridPane grid, String string, Font font, HPos hpos, int columnIndex, int rowIndex){
+    	Text text = new Text(string);
+    	text.setFont(font);
+        GridPane.setHalignment(text, hpos);
+        grid.add(text, columnIndex, rowIndex);
+    }
+    
     /**
      * The main() method is ignored in correctly deployed JavaFX application.
      * main() serves only as fallback in case the application can not be
