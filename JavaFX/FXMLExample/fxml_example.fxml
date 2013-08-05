@@ -43,7 +43,7 @@
         GridPane.columnIndex="1" GridPane.rowIndex="6"/>
         
     <stylesheets>
-      <URL value="@Login.css" />
+      <URL value="@res/css/Login.css" />
     </stylesheets>
 
 </GridPane>

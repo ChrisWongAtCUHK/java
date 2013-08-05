@@ -4,6 +4,7 @@
 	<property name="project-name" value="FXMLExample"/>
 	<property name="fxml-name" value="fxml_example.fxml"/>
 	<property name="fxml-class" value="fxmlexample/FXMLExample"/>
+	<property name="resource-dir" value="res" />
 	<property name="created-by" value="Chris Wong"/>
 	<property name="class-path" value="jar/jfxrt.jar"/>
 	<property name="main-class" value="${fxml-class}"/>
@@ -14,6 +15,9 @@
 	<target name="prepare">
 		<mkdir dir="deploy" />
 		<copy file="${fxml-name}" todir="${base-dir}" />
+		<copy todir="${base-dir}/res">
+			<fileset dir="${resource-dir}" includes="*/**.*" />
+		</copy>
 	</target>
 		
 	<!-- create the jar -->
