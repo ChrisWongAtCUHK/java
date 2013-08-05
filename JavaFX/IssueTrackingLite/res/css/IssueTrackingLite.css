@@ -30,6 +30,22 @@
     -fx-padding: 3 11 3 11;
 }
 
+.button:hover{
+    -fx-background-color:
+        linear-gradient(
+        	derive(master-color, 90%),
+            derive(master-color, 120%) 
+            
+        ),
+        radial-gradient(
+            center 50% -40%, 
+            radius 180%,
+            derive(master-color, 75%) 55%,
+            derive(master-color, 95%) 55% 
+            
+        );
+}
+
 .darkList {
     -fx-background-color: derive(master-color, -60%);
 }

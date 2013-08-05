@@ -101,7 +101,7 @@ public class IssueTrackingLiteController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rsrcs) {
         assert colName != null : "fx:id=\"colName\" was not injected: check your FXML file 'IssueTrackingLite.fxml'.";
-        assert colStatus != null : "fx:id=\"colStatus\" was not injected: check your FXML file 'IssueTrackingLite.fxml'.";
+        /*assert colStatus != null : "fx:id=\"colStatus\" was not injected: check your FXML file 'IssueTrackingLite.fxml'.";
         assert colSynopsis != null : "fx:id=\"colSynopsis\" was not injected: check your FXML file 'IssueTrackingLite.fxml'.";
         assert deleteIssue != null : "fx:id=\"deleteIssue\" was not injected: check your FXML file 'IssueTrackingLite.fxml'.";
         assert descriptionValue != null : "fx:id=\"descriptionValue\" was not injected: check your FXML file 'IssueTrackingLite.fxml'.";
@@ -111,9 +111,9 @@ public class IssueTrackingLiteController implements Initializable {
         assert saveIssue != null : "fx:id=\"saveIssue\" was not injected: check your FXML file 'IssueTrackingLite.fxml'.";
         assert synopsis != null : "fx:id=\"synopsis\" was not injected: check your FXML file 'IssueTrackingLite.fxml'.";
         assert table != null : "fx:id=\"table\" was not injected: check your FXML file 'IssueTrackingLite.fxml'.";
-        assert list != null : "fx:id=\"list\" was not injected: check your FXML file 'IssueTrackingLite.fxml'.";
+        assert list != null : "fx:id=\"list\" was not injected: check your FXML file 'IssueTrackingLite.fxml'.";*/
         
-        System.out.println(this.getClass().getSimpleName() + ".initialize");
+/*        System.out.println(this.getClass().getSimpleName() + ".initialize");
         configureButtons();
         configureDetails();
         configureTable();
@@ -122,7 +122,7 @@ public class IssueTrackingLiteController implements Initializable {
             list.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
             list.getSelectionModel().selectedItemProperty().addListener(projectItemSelected);
             displayedProjectNames.addListener(projectNamesListener);
-        }
+        }*/
     }
 
     /**
