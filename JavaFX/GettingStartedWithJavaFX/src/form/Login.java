@@ -71,6 +71,9 @@ public class Login extends Application {
         Scene scene = new Scene(grid, 300, 275);
         primaryStage.setScene(scene);
         
+        // http://docs.oracle.com/javafx/2/get_started/css.htm
+        // Example 3-1 Initialize the stylesheets Variable
+        scene.getStylesheets().add(Login.class.getClassLoader().getResource("res/css/Login.css").toExternalForm());
         primaryStage.show();
     }
 }

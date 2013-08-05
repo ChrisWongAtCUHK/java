@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="StyleSheet">
+	<property name="base-dir"  value="bin"/>
+	<!-- TODO: note that it is absolute path -->
+	<property name="jfxrt.jar"  value="C:\Program Files\Java\jdk1.7.0_25\jre\lib\jfxrt.jar"/>
+	<target name="mkdirDeploy">
+		<mkdir dir="deploy" />
+	</target>
+	
+	<!-- prepare other jar files-->
+	<target name="prepareJar" depends="mkdirDeploy">
+		<mkdir dir="deploy/jar" />
+		<delete>
+				<fileset dir="deploy/jar/" includes="*.jar" />
+		</delete>
+		<copy file="${jfxrt.jar}" todir="deploy/jar" />
+	</target>
+	
+	<!-- prepare resource -->
+	<target name="prepareResource" depends="prepareJar">
+		<mkdir dir="deploy/res" />
+		<delete>
+			<fileset dir="deploy/res/" includes="**.*" />
+		</delete>
+		<copy todir="deploy/res">
+			<fileset dir="res" includes="*/**.*"/>
+		</copy>
+	</target>
+		
+	<!-- create the jar -->
+	<target name="build" depends="prepareResource">
+		<jar jarfile="deploy/StyleSheetDemo.jar" basedir="${base-dir}">
+			<manifest>
+				<attribute name="Manifest-Version" value="1.0" />
+				<attribute name="JavaFX-Version" value="2.2" />
+				<attribute name="implementation-title" value="StyleSheetDemo" />
+				<attribute name="implementation-version" value="1.0" />
+				<attribute name="JavaFX-Application-Class" value="form.Login" />
+				<attribute name="Created-By" value="Chris Wong" />
+				<attribute name="Class-Path" value="jar/jfxrt.jar" />
+				<attribute name="Main-Class" value="form/Login" />
+			</manifest>
+		</jar>
+	</target>
+</project>
