@@ -44,6 +44,7 @@ public class Main extends Application {
     /**
      * @param args the command line arguments
      */
+	// http://docs.oracle.com/javafx/scenebuilder/1/get_started/jsbpub-get_started.htm
     public static void main(String[] args) {
         Application.launch(Main.class, (java.lang.String[])null);
     }
