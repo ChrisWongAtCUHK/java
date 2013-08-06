@@ -32,29 +32,39 @@
 package issuetrackinglite.model;
 
 import issuetrackinglite.model.Issue.IssueStatus;
-import java.util.Arrays;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.InvalidPropertiesFormatException;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
+
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
-import javafx.collections.MapChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
 public class TrackingServiceStub implements TrackingService {
 
+	final static String projectsXML = "projects.xml";
+	
     // You add a project by adding an entry with an empty observable array list
     // of issue IDs in the projects Map.
     final ObservableMap<String, ObservableList<String>> projectsMap;
     {
         final Map<String, ObservableList<String>> map = new TreeMap<String, ObservableList<String>>();
         projectsMap = FXCollections.observableMap(map);
-        for (String s : newList("Project1", "Project2", "Project3", "Project4")) {
+        
+        for (String s : newList()) {
             projectsMap.put(s, FXCollections.<String>observableArrayList());
         }
     }
@@ -185,34 +195,49 @@ public class TrackingServiceStub implements TrackingService {
         issuesMap = FXCollections.observableMap(map);
         issuesMap.addListener(issuesMapChangeListener);
         IssueStub ts;
-        ts = createIssueFor("Project1");
-        ts.setSynopsis("We rode in sorrow, with strong hounds three");
-        ts.setDescription("From \"The Wanderings Of Oisin\".\nW. B. Yeats.");
-        ts = createIssueFor("Project1");
-        ts.setSynopsis("Bran, Sgeolan, and Lomair");
-        ts.setDescription("From \"The Wanderings Of Oisin\".\nW. B. Yeats.");
-        ts = createIssueFor("Project2");
-        ts.setSynopsis("On a morning misty and mild and fair");
-        ts.setDescription("From \"The Wanderings Of Oisin\".\nW. B. Yeats.");
-        ts = createIssueFor("Project4");
-        ts.setSynopsis("The mist-drops hung on the fragrant trees");
-        ts.setDescription("From \"The Wanderings Of Oisin\".\nW. B. Yeats.");
-        ts = createIssueFor("Project3");
-        ts.setSynopsis("And in the blossoms hung the bees");
-        ts.setDescription("From \"The Wanderings Of Oisin\".\nW. B. Yeats.");
-        ts = createIssueFor("Project2");
-        ts.setSynopsis("We rode in sadness above Lough Lean");
-        ts.setDescription("From \"The Wanderings Of Oisin\".\nW. B. Yeats.");
-        ts = createIssueFor("Project1");
-        ts.setSynopsis("For our best were dead on Gavra's green");
-        ts.setDescription("From \"The Wanderings Of Oisin\".\nW. B. Yeats.");
-        ts = createIssueFor("Project4");
-        ts.setSynopsis("The Wanderings of Oisin");
-        ts.setDescription("William Butler Yeats.");
+        
+        // Load the xml as property and return as TreeMap
+        TreeMap<String, String> projectsTreeMap = property2TreeMap(projectsXML);
+	
+        // For each project
+        for(Entry<String, String> projectsEntry: projectsTreeMap.entrySet()){
+			String synopsesXML = projectsEntry.getValue().toString();
+			TreeMap<String, String> synopsesTreeMap = property2TreeMap(synopsesXML + ".xml");
+			
+			ArrayList<String> synopsesList = new ArrayList<String>();
+			ArrayList<String> descriptionsList = new ArrayList<String>();
+
+			// For each pair of synopsis & description
+			for(Entry<String, String> synopsesEntry: synopsesTreeMap.entrySet()){
+				// Minus 1 because ArrayList starts from 0
+				if(synopsesEntry.getKey().startsWith("synopsis")){
+					synopsesList.add(Integer.valueOf(synopsesEntry.getKey().replace("synopsis", "")) - 1, synopsesEntry.getValue());
+				} else if(synopsesEntry.getKey().startsWith("description")){
+					descriptionsList.add(Integer.valueOf(synopsesEntry.getKey().replace("description", "")) - 1, synopsesEntry.getValue());
+				}
+			}
+			
+			for(int i = 0; i < synopsesList.size(); i++){
+				ts = createIssueFor(synopsesXML);
+		        ts.setSynopsis(synopsesList.get(i));
+		        ts.setDescription(descriptionsList.get(i));
+			}
+        }
     }
 
-    private static <T> List<T> newList(T... items) {
-        return Arrays.asList(items);
+    // Create the list for listView
+    private static List<String> newList() {
+    	
+    	ArrayList<String> stringList = new ArrayList<String>();
+    	
+        // By Chris Wong
+        TreeMap<String, String> projectsTreeMap = (TreeMap<String, String>) property2TreeMap(projectsXML);
+		
+        for(Entry<String, String> projectsEntry: projectsTreeMap.entrySet()){
+        	String projectName = projectsEntry.getValue();
+        	stringList.add(projectName);
+        }
+        return stringList;
     }
 
 
@@ -256,4 +281,26 @@ public class TrackingServiceStub implements TrackingService {
         issue.setStatus(status);
     }
 
+    // Load the xml as property and return as TreeMap
+    public static TreeMap<String, String> property2TreeMap(String xmlFilename){
+    	java.util.Properties props = new java.util.Properties();
+        
+        try {
+			props.loadFromXML(new FileInputStream(xmlFilename));
+        } catch (InvalidPropertiesFormatException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
+        Map<String, String> unsortMap = new HashMap<String, String>();
+		for(Map.Entry<Object, Object> projectEntry: props.entrySet()){
+			unsortMap.put(projectEntry.getKey().toString(), projectEntry.getValue().toString());
+		}
+		
+		TreeMap<String, String> treeMap = new TreeMap<String, String>(unsortMap);
+		return treeMap;
+    }
 }

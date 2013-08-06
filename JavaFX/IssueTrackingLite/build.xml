@@ -17,6 +17,9 @@
 		<copy todir="${base-dir}/${resource-dir}">
 			<fileset dir="${resource-dir}" includes="*/**.*" />
 		</copy>
+		<copy todir="deploy">
+			<fileset dir="." includes="*.xml" excludes="build.xml"/>
+		</copy>
 	</target>
 		
 	<!-- create the jar -->

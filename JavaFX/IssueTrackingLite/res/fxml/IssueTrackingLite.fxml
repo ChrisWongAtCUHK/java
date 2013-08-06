@@ -39,7 +39,7 @@
                     <HBox alignment="CENTER" layoutY="14.0" prefHeight="22.0" prefWidth="558.0" spacing="5.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
                       <children>
                         <Label fx:id="displayedIssueLabel" minWidth="-Infinity" text="PROJECT / ID" />
-                        <TextField id="textField1" fx:id="synopsis" prefHeight="22.0" prefWidth="378.0" text="SYNOPSIS" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="synopsis" prefHeight="22.0" prefWidth="378.0" text="SYNOPSIS" HBox.hgrow="ALWAYS" />
                       </children>
                     </HBox>
                   </children>
