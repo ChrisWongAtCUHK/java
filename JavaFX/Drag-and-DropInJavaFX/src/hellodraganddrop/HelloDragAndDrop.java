@@ -78,10 +78,16 @@ public class HelloDragAndDrop extends Application {
             }
         });
 
+        source.setOnDragOver(new EventHandler <DragEvent>() {
+        	public void handle(DragEvent event) {
+        		System.out.println("source onDragOver");
+        	}
+        });
+        
         target.setOnDragOver(new EventHandler <DragEvent>() {
             public void handle(DragEvent event) {
                 /* data is dragged over the target */
-                System.out.println("onDragOver");
+                System.out.println("target onDragOver");
                 
                 /* accept it only if it is  not dragged from the same node 
                  * and if it has a string data */

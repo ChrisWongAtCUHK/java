@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="DraggableComponent">
+	<property environment="env"/>
+	<property name="base-dir" value="bin"/>
+	<property name="res-img-dir" value="res/img"/>
+	<property name="project-name" value="DraggableComponent"/>
+	<property name="created-by" value="Chris Wong"/>
+	<property name="main-class" value="demo.DCDemo"/>
+
+	<!-- compile the project -->
+	<target name="compile" description="compile the source files">
+		<javac includeantruntime="false" srcdir="./src" destdir="${base-dir}" >
+		</javac>
+	</target>
+
+	<!-- run the project -->
+	<target name="run" description="run the project">
+		<java jar="deploy/${project-name}.jar" fork="true"
+           failonerror="true" >
+		</java>
+	</target>
+
+	<!-- prepare  -->
+	<target name="prepare" >
+		<mkdir dir="deploy" />
+		<mkdir dir="deploy/res" />
+		<mkdir dir="deploy/res/img" />
+	</target>
+
+	<!-- create the jar -->
+	<target name="build" depends="prepare">
+		<copy todir="deploy/res/img">
+			 <fileset dir="${res-img-dir}"/>
+		</copy>
+		<jar jarfile="deploy/${project-name}.jar" basedir="${base-dir}">
+			<manifest>
+				<attribute name="Manifest-Version" value="1.0" />
+				<attribute name="JavaFX-Version" value="2.2" />
+				<attribute name="implementation-version" value="1.0" />
+				<attribute name="Created-By" value="${created-by}" />
+				<attribute name="Main-Class" value="${main-class}" />
+			</manifest>
+		</jar>
+	</target>
+</project>

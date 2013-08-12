@@ -2,6 +2,8 @@ package demo;
 
 import swing.draggable.DraggableComponent;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 
@@ -14,7 +16,9 @@ public class DCDemo {
 		    // our nice component
 		    f.setLayout(null);
 
-		    DraggableComponent dc = new DraggableComponent();
+		    //DraggableComponent dc = new DraggableComponent();
+		    // http://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Konqi-klogo-official-400x500_b.png/220px-Konqi-klogo-official-400x500_b.png
+		    DraggableComponent dc = new DraggableComponent("res/img/konqi.png");
 		    f.add(dc);
 
 		    f.setSize(500, 500);
