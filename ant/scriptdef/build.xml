@@ -1,0 +1,33 @@
+
+<!-- http://www.java-tips.org/other-api-tips/ant/how-to-use-scriptdef-task.html -->
+<project name="scripttestpro" basedir="." default="runscripttest">
+	<!--
+		The following definition creates a task which supports an attribute called attr and two nested elements, one being a fileset and the other a path. When executed, the resulting task logs the value of the attribute and the basedir of the first fileset.
+	-->
+	<scriptdef name="scripttest" language="javascript">
+		<attribute name="attr1"/>
+
+		<element name="fileset" type="fileset"/>
+		<element name="path" type="path"/>
+		<![CDATA[
+
+		  project.log("Hello from script");
+		  project.log("Attribute attr1 = " + attributes.get("attr1"));
+		  project.log("First fileset basedir = "
+
+			+ elements.get("fileset").get(0).getDir(project));
+
+		]]>
+	</scriptdef>
+
+	<target name="runscripttest">
+		<scripttest attr1="test">
+			<path>
+			  <pathelement location="src"/>
+
+			</path>
+			<fileset dir="src"/>
+			<fileset dir="main"/>
+		</scripttest>
+	</target>
+</project>
